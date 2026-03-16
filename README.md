@@ -1,4 +1,4 @@
-
+![API Tests](https://github.com/Nermin1112/petstore-api-automation/actions/workflows/api-tests.yml/badge.svg)
 
 # Petstore API Automation Tests
 
