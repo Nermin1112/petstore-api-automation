@@ -1,5 +1,4 @@
 from testdata.user_payload import create_user_payload
-import json
 
 
 def test_create_user(api_client):

@@ -11,7 +11,7 @@ def create_pet_payload(pet_id):
         }
         
     
-def update_pet_payloads(pet_id):
+def update_pet_payload(pet_id):
     return{
         "id": pet_id,
         "name":fake.first_name(),

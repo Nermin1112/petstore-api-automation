@@ -1,6 +1,5 @@
-from testdata.pet_payload import create_pet_payload, update_pet_payloads
+from testdata.pet_payload import create_pet_payload, update_pet_payload
 from testdata.user_payload import create_user_payload
-import json
 
 
 def test_create_pet(api_client, pet_id):
@@ -41,7 +40,7 @@ def test_id_check(api_client, created_pet):
 
 def test_edit_pet_name(api_client, created_pet):
 
-    payload = update_pet_payloads(created_pet['id'])
+    payload = update_pet_payload(created_pet['id'])
 
     response = api_client.put("/pet", payload)
 
@@ -53,11 +52,19 @@ def test_edit_pet_name(api_client, created_pet):
     assert data["name"] == payload["name"]
     assert data["status"] == payload["status"]
 
+    get_response = api_client.get(f"/pet/{payload['id']}")
+    data = get_response.json()
+    assert data["name"] == payload["name"]
+
 def test_delete_pet_id(api_client, created_pet):
     
     response = api_client.delete(f"/pet/{created_pet['id']}")
 
     assert response.status_code == 200
+
+    verify_response = api_client.get(f"/pet/{created_pet['id']}")
+
+    assert verify_response.status_code == 404
 
 def test_delete_pet_twice(api_client, created_pet):
 
@@ -75,6 +82,8 @@ def test_empty_body(api_client):
     response = api_client.post("/pet", payload)
 
     assert response.status_code == 200
+
+    # Known issue: API accepts empty body (should return 400)
 
 
 
